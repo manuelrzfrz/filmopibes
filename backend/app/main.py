@@ -1,10 +1,30 @@
-﻿from fastapi import FastAPI
+﻿"""
+==============================================================================
+ARCHIVO: app/main.py
+PROPÓSITO: Punto de entrada (Entrypoint) de la API con FastAPI.
+DESCRIPCIÓN: Crea la instancia global de FastAPI, configura los permisos de CORS
+            para permitir llamadas desde la app web (frontend) y conecta los
+            routers creados en la carpeta 'routers/'.
+==============================================================================
+"""
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from contextlib import asynccontextmanager
+
+from app.database import connect_db, close_db
+from app.routers import peliculas, usuarios, valoraciones
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    await connect_db()
+    yield
+    await close_db()
 
 app = FastAPI(
     title="Filmopibes API",
-    description="API REST para la gestión del catálogo de cine de Filmopibes",
-    version="1.0.0"
+    description="API para la gestión y visualización de la Filmoteca",
+    version="1.0.0",
+    lifespan=lifespan
 )
 
 app.add_middleware(
@@ -15,15 +35,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.include_router(usuarios.router)
+app.include_router(peliculas.router)
+app.include_router(valoraciones.router)
+
 @app.get("/")
 async def root():
-    return {"mensaje": "API de Filmopibes lista y funcionando 🎬"}
-
-@app.get("/ping")
-async def ping_db():
-    from app.database import client
-    try:
-        await client.admin.command('ping')
-        return {"estado": "ok", "db": "Conexión con MongoDB correcta 🟢"}
-    except Exception as e:
-        return {"estado": "error", "detalle": str(e)}
+    return {"status": "online", "message": "API de Filmopibes funcionando correctamente"}
