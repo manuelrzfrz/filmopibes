@@ -3,7 +3,7 @@ from bson import ObjectId
 from app.database import get_db
 from app.models import ValoracionUpsertRequest
 
-router = APIRouter(prefix="/api/valoraciones", tags=["Valoraciones"])
+router = APIRouter(prefix="/api/ratings", tags=["Ratings"])
 
 @router.post("")
 async def guardar_o_actualizar_valoracion(payload: ValoracionUpsertRequest, db = Depends(get_db)):

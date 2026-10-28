@@ -7,12 +7,12 @@ DESCRIPCIÓN: Crea la instancia global de FastAPI, configura los permisos de COR
             routers creados en la carpeta 'routers/'.
 ==============================================================================
 """
+from app.routers import films, users,ratings
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 
 from app.database import connect_db, close_db
-from app.routers import peliculas, usuarios, valoraciones
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -35,9 +35,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(usuarios.router)
-app.include_router(peliculas.router)
-app.include_router(valoraciones.router)
+app.include_router(users.router)
+app.include_router(films.router)
+app.include_router(ratings.router)
 
 @app.get("/")
 async def root():

@@ -1,6 +1,6 @@
 """
 ==============================================================================
-ARCHIVO: config.py
+ARCHIVO: settings.py
 PROPÓSITO: Configuración centralizada de la aplicación.
 DESCRIPCIÓN: Carga y valida las variables de entorno (desde el archivo .env)
             utilizando Pydantic Settings. Centraliza el acceso a credenciales

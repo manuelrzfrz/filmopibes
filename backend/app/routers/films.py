@@ -1,6 +1,6 @@
 """
 ==============================================================================
-ARCHIVO: app/routers/peliculas.py
+ARCHIVO: app/routers/films.py
 PROPÓSITO: Endpoints REST para la gestión de películas.
 DESCRIPCIÓN: Define las rutas HTTP para consultar (con filtros por género o
             búsqueda por nombre), crear, modificar campos específicos y
@@ -13,7 +13,7 @@ from typing import Optional, List
 from app.database import get_db
 from app.models import PeliculaGridItem
 
-router = APIRouter(prefix="/api/peliculas", tags=["Películas"])
+router = APIRouter(prefix="/api/films", tags=["Films"])
 
 @router.get("/grid", response_model=List[PeliculaGridItem])
 async def obtener_peliculas_grid(

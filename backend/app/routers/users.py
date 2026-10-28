@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException, Depends
 from app.database import get_db
 from app.models import UsuarioResponse, LoginRequest
 
-router = APIRouter(prefix="/api/usuarios", tags=["Usuarios & Autenticación"])
+router = APIRouter(prefix="/api/users", tags=["Users & Authentication"])
 
 @router.get("", response_model=list[UsuarioResponse])
 async def obtener_usuarios(db = Depends(get_db)):

@@ -1,12 +1,17 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
+import { useState,useEffect } from "react";
+import { getFilmsGrid } from "./api/filmsApi";
+import heroImg from "./assets/hero.png";
+import reactLogo from "./assets/react.svg";
+import viteLogo from "./assets/vite.svg";
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    getFilmsGrid()
+      .then((data) => console.log("Películas cargadas desde la BD:", data))
+      .catch((err) => console.error("Error al conectar:", err));
+  }, []);
   return (
     <>
       <section id="center">
@@ -116,7 +121,7 @@ function App() {
       <div className="ticks"></div>
       <section id="spacer"></section>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
